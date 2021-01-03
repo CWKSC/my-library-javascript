@@ -1,4 +1,4 @@
-function XORtable(target = 'print_r(scandir(".")', ok = "0123456789-*|^~"){
+function XORTable(target = 'print_r(scandir(".")', ok = "0123456789-*|^~"){
     aArr = [];
     bArr = [];
     cArr = [];
