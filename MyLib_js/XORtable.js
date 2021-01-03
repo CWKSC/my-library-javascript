@@ -23,6 +23,6 @@ function XORtable(ok, target){
             if(leave) break;
         }
     }
-    console.log(aArr, bArr, cArr);
     console.log("\'" + aArr.join('') + "\'^\'" + bArr.join('') + "\'^\'" + cArr.join('') + "\'");
+    return [aArr, bArr, cArr];
 }
