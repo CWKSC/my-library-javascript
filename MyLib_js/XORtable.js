@@ -22,6 +22,9 @@ function XORTable(target = 'print_r(scandir(".")', ok = "0123456789-*|^~"){
             }
             if(leave) break;
         }
+        if(leave == false){
+            console.log("tar = " + tar + " can not find");
+        }
     }
     console.log("\'" + aArr.join('') + "\'^\'" + bArr.join('') + "\'^\'" + cArr.join('') + "\'");
     return [aArr, bArr, cArr];
