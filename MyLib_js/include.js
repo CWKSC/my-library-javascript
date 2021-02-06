@@ -9,3 +9,4 @@ currentRoot = "MyLib_js";
 load("HelloWorld");
 load("JoinFunction");
 load("XORTable");
+load("intToHexStringByEndian");
