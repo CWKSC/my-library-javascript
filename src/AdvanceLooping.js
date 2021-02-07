@@ -19,6 +19,8 @@ CombinationLoop: function(refer = [1, 2, 3], action = console.log)
 Test_CombinationLoop: function(){
     console.log("CombinationLoop([1, 2, 3], console.log)");
     this.CombinationLoop([1, 2, 3], console.log);
+    console.log("CombinationLoop([2, 3, 4], console.log)");
+    this.CombinationLoop([2, 3, 4], console.log);
 }
 
 
