@@ -6,8 +6,8 @@ function load(name){
 		src="https://cdn.jsdelivr.net/gh/CWKSC/MyLib_js/MyLib_js/${name}.js"
 		async> </script>`);
 }
-load("HelloWorld");
 load("CTFTool");
+load("AdvanceLooping");
 
 })();
 

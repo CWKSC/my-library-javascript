@@ -3,12 +3,16 @@
 MyLib_js
 
 ```html
-<script src="https://raw.githubusercontent.com/CWKSC/MyLib_js/master/MyLib_js/include.js"></scripts>
+<script type="text/javascript" 
+        src="https://cdn.jsdelivr.net/gh/CWKSC/MyLib_js/MyLib_js/include.js"
+        async> </script>
 ```
 
 `CTFTool`
 
 ```html
-<script src="https://raw.githubusercontent.com/CWKSC/MyLib_js/master/MyLib_js/CTFTool.js"></scripts>
+<script type="text/javascript" 
+        src="https://cdn.jsdelivr.net/gh/CWKSC/MyLib_js/MyLib_js/CTFTool.js"
+        async> </script>
 ```
 
