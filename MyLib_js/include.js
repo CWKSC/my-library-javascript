@@ -1,17 +1,12 @@
-var currentRoot = "";
+(() => {
 
-function load(src){
-	document.write(`<script src="${currentRoot}/${src}.js"></script>`);
+function load(name){
+	document.write(`<script 
+		type="text/javascript" 
+		src="https://cdn.jsdelivr.net/gh/CWKSC/MyLib_js/MyLib_js/${name}.js"
+		async> </script>`);
 }
-function loadByUrl(name){
-	document.write(`<script src="https://raw.githubusercontent.com/CWKSC/MyLib_js/master/MyLib_js/${name}.js"></script>`)
-}
+load("HelloWorld");
+load("CTFTool");
 
-loadByUrl("HelloWorld");
-loadByUrl("JoinFunction");
-loadByUrl("CTFTool");
-
-// currentRoot = "MyLib_js";
-// load("HelloWorld");
-// load("JoinFunction");
-// load("CTFTool");
+})();
