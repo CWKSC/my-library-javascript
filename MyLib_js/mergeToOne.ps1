@@ -1,0 +1,1 @@
+type *.js > ../MyLib_js.js

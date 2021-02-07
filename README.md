@@ -4,7 +4,7 @@ MyLib_js
 
 ```html
 <script type="text/javascript" 
-        src="https://cdn.jsdelivr.net/gh/CWKSC/MyLib_js/MyLib_js/include.js"
+        src="https://cdn.jsdelivr.net/gh/CWKSC/MyLib_js/MyLib_js.js"
         async> </script>
 ```
 
