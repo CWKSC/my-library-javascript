@@ -8,5 +8,4 @@ function load(src){
 currentRoot = "MyLib_js";
 load("HelloWorld");
 load("JoinFunction");
-load("XORTable");
-load("intToHexStringByEndian");
+load("CTFTool");
