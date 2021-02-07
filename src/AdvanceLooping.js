@@ -1,6 +1,6 @@
 var AdvanceLooping = {
 
-CombinationLoop: function(refer, action)
+CombinationLoop: function(refer = [1, 2, 3], action = console.log)
 {
     var indexs = Array(refer.length).fill(0);
     while (true)
@@ -18,7 +18,7 @@ CombinationLoop: function(refer, action)
 },
 Test_CombinationLoop: function(){
     console.log("CombinationLoop([1, 2, 3], console.log)");
-    CombinationLoop([1, 2, 3], console.log);
+    this.CombinationLoop([1, 2, 3], console.log);
 }
 
 
