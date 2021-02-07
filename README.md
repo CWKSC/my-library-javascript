@@ -22,8 +22,6 @@ https://cdn.jsdelivr.net/gh/CWKSC/MyLib_js/src/CTFTool.js
 
 ### Usage
 
-`intToHexStringByEndian(input, LSB = false)`
-
 ```js
 function intToHexStringByEndian(input, LSB = false)
 
