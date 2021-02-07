@@ -84,9 +84,10 @@ XORTable: function(target = 'print_r(scandir(".")', availableSet = "0123456789-*
 // 1: (20) ["8", "8", "-", "*", "8", "1", "8", "2", "9", "-", "-", "*", "*", "-", "8", "2", "8", "3", "8", "3"]
 // 2: (20) ["|", "~", "|", "|", "|", "^", "~", "*", "~", "~", "|", "|", "~", "|", "~", "*", "*", "-", "*", "*"]
 
-BruteForceString: function(n){
+BruteForceString: function(n, defaultSet = CTFTool.printableAsciiIntArray){
     this.data = [Array(n).fill(0)];
-    this.filter = function(condition, indexSet, defaultSet = CTFTool.printableAsciiIntArray, sets = Array(indexSet.length).fill(defaultSet)){
+    this.defaultSet = defaultSet;
+    this.filter = function(condition, indexSet, sets = Array(indexSet.length).fill(defaultSet)){
         var result = [];
         //console.log(condition, indexs, sets);
         
