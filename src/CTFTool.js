@@ -50,7 +50,7 @@ XORTable: function(target = 'print_r(scandir(".")', availableSet = "0123456789-*
     }
     console.log("\'" + aArr.join('') + "\'^\'" + bArr.join('') + "\'^\'" + cArr.join('') + "\'");
     return [aArr, bArr, cArr];
-}
+},
 // XORTable('print_r(scandir(".")', "0123456789-*|^~");
 // 
 // '4'^'8'^'|' = p
@@ -79,5 +79,55 @@ XORTable: function(target = 'print_r(scandir(".")', availableSet = "0123456789-*
 // 0: (20) ["4", "4", "8", "8", "0", "0", "4", "0", "4", "0", "0", "8", "0", "8", "4", "0", "0", "0", "0", "0"]
 // 1: (20) ["8", "8", "-", "*", "8", "1", "8", "2", "9", "-", "-", "*", "*", "-", "8", "2", "8", "3", "8", "3"]
 // 2: (20) ["|", "~", "|", "|", "|", "^", "~", "*", "~", "~", "|", "|", "~", "|", "~", "*", "*", "-", "*", "*"]
+
+BruteForceString: function(n){
+    this.data = [Array(n).fill(0)];
+    this.filter = function(condition, indexSet, sets = Array(indexSet.length).fill(CTFTool.printableAsciiIntArray)){
+        var result = [];
+        //console.log(condition, indexs, sets);
+        
+        this.data.forEach(target => {
+            var tempIndexSet = Array.from(indexSet);
+            var tempSets = Array.from(sets);
+            for(let i = 0; i < tempIndexSet.length; i++){
+                // console.log("tempIndexSet: ", tempIndexSet, "i: ", i);
+                if(target[tempIndexSet[i]] != 0){
+                    tempIndexSet.splice(i, 1);
+                    tempSets.splice(i, 1);
+                    i--;
+                }
+            }
+            if(tempIndexSet.length == 0){
+                if(condition(target)) result.push(target);
+                return;
+            }
+            // console.log("tempIndexSet: ", tempIndexSet);
+            
+            var refer = Array(tempIndexSet.length);
+            for(let i = 0; i < tempIndexSet.length; i++){
+                //console.log("Sets: ", tempSets, "tempIndexSet[i]: ", tempIndexSet[i]);
+                refer[i] = tempSets[i].length;
+            }
+            // console.log(refer);
+    
+            AdvanceLooping.CombinationLoop(refer, indexs => {
+                let values = indexs.map((ele, i) => tempSets[i][ele]);
+    
+                var temp = Array.from(target);
+                tempIndexSet.forEach((index, i) => temp[index] = values[i]);
+    
+                if(condition(temp)) result.push(temp);
+            });
+        });
+        this.data = result;
+        return this;
+    };
+    this.display = function(){
+        this.data.forEach(target => 
+            console.log(target.map(ele => String.fromCharCode(ele)).join(''))
+        );
+    }
+}
+
 
 }

@@ -1,4 +1,4 @@
-[cwksc.github.io/mylib_js/](https://cwksc.github.io/MyLib_js/)
+[cwksc.github.io/mylib_js/](https://cwksc.github.io/MyLib_js/) or you can download it and use `forLocal.html`
 
 ### MyLib_js
 
