@@ -1,6 +1,6 @@
-[cwksc.github.io/mylib_js/](https://cwksc.github.io/MyLib_js/)
+https://cwksc.github.io/MyLib_js/  (Open your console to use)
 
-### MyLib_js
+## MyLib_js
 
 https://cdn.jsdelivr.net/gh/CWKSC/MyLib_js/MyLib_js.js
 
@@ -10,7 +10,7 @@ https://cdn.jsdelivr.net/gh/CWKSC/MyLib_js/MyLib_js.js
         async> </script>
 ```
 
-### CTFTool
+## CTFTool
 
 https://cdn.jsdelivr.net/gh/CWKSC/MyLib_js/src/CTFTool.js
 
@@ -20,7 +20,7 @@ https://cdn.jsdelivr.net/gh/CWKSC/MyLib_js/src/CTFTool.js
         async> </script>
 ```
 
-### Usage
+### Function
 
 ```js
 function intToHexStringByEndian(input, LSB = false)
@@ -36,6 +36,7 @@ intToHexStringByEndian(113626824, true)
 ```js
 function XORTable(target = 'print_r(scandir(".")', availableSet = "0123456789-*|^~")
 
+// Example //
 XORTable('print_r(scandir(".")', "0123456789-*|^~");
 
 '4'^'8'^'|' = p
@@ -64,5 +65,25 @@ XORTable('print_r(scandir(".")', "0123456789-*|^~");
 0: (20) ["4", "4", "8", "8", "0", "0", "4", "0", "4", "0", "0", "8", "0", "8", "4", "0", "0", "0", "0", "0"]
 1: (20) ["8", "8", "-", "*", "8", "1", "8", "2", "9", "-", "-", "*", "*", "-", "8", "2", "8", "3", "8", "3"]
 2: (20) ["|", "~", "|", "|", "|", "^", "~", "*", "~", "~", "|", "|", "~", "|", "~", "*", "*", "-", "*", "*"]
+```
+
+### Class
+
+```js
+BruteForceString(n)
+function filter(condition, indexSet, sets = Array(indexSet.length).fill(CTFTool.printableAsciiIntArray))
+function display()
+
+// Example //
+new CTFTool.BruteForceString(6)
+.filter(a => a[0] + a[1] == 210, [0, 1])
+.filter(a => a[1] + a[2] == 205, [1, 2])
+.filter(a => a[2] + a[3] == 200, [2, 3])
+.filter(a => a[0] - a[1] == -6, [0, 2])
+.filter(a => a[0] - a[3] == -1, [0, 3])
+.filter(a => a[0] + a[4] == 225, [0, 4])
+.filter(a => a[3] * a[5] == 12875, [3, 5])
+.display();
+// flag{}
 ```
 
