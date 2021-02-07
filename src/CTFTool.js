@@ -86,7 +86,7 @@ XORTable: function(target = 'print_r(scandir(".")', availableSet = "0123456789-*
 
 BruteForceString: function(n){
     this.data = [Array(n).fill(0)];
-    this.filter = function(condition, indexSet, sets = Array(indexSet.length).fill(CTFTool.printableAsciiIntArray)){
+    this.filter = function(condition, indexSet, defaultSet = CTFTool.printableAsciiIntArray, sets = Array(indexSet.length).fill(defaultSet)){
         var result = [];
         //console.log(condition, indexs, sets);
         
