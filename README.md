@@ -72,9 +72,41 @@ XORTable('print_r(scandir(".")', "0123456789-*|^~");
 ```js
 BruteForceString(n)
 function filter(condition, indexSet, sets = Array(indexSet.length).fill(CTFTool.printableAsciiIntArray))
-function display()
+function display(n = 20)
 
-// Example //
+// Example 1 //
+var flag = new CTFTool.BruteForceString(6)
+.filter(a => a[0] + a[1] == 210, [0, 1])
+.filter(a => a[1] + a[2] == 205, [1, 2])
+.filter(a => a[2] + a[3] == 200, [2, 3]);
+
+flag.display();
+// T~Oy
+// U}Px
+// V|Qw
+// W{Rv
+// XzSu
+// YyTt
+// ZxUs
+// [wVr
+// \vWq
+// ]uXp
+// ^tYo
+// _sZn
+// `r[m
+// aq\l
+// bp]k
+// co^j
+// dn_i
+// em`h
+// flag
+// gkbf
+
+flag.filter(a => a[0] - a[1] == -6, [0, 2])
+flag.display();
+// flag
+
+// Example 2 //
 new CTFTool.BruteForceString(6)
 .filter(a => a[0] + a[1] == 210, [0, 1])
 .filter(a => a[1] + a[2] == 205, [1, 2])
