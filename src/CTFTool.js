@@ -92,10 +92,15 @@ Test_XORTable: function() {
 BruteForceString: function(n, defaultSet = CTFTool.printableAsciiIntArray){
     this.data = [Array(n).fill(0)];
     this.defaultSet = defaultSet;
-    this.filter = function(condition, indexSet, sets = Array(indexSet.length).fill(defaultSet)){
+    this.filter = function(condition, indexSet = null, sets = Array(indexSet.length).fill(defaultSet)){
         var result = [];
         //console.log(condition, indexs, sets);
         
+        if(indexSet == null){
+            indexSet = condition.toString().match(/\[(.+?)\]/g)
+                .map(ele => parseInt(ele.substring(1, ele.length - 1)));
+        }
+
         this.data.forEach(target => {
             var tempIndexSet = Array.from(indexSet);
             var tempSets = Array.from(sets);
@@ -114,10 +119,7 @@ BruteForceString: function(n, defaultSet = CTFTool.printableAsciiIntArray){
             // console.log("tempIndexSet: ", tempIndexSet);
             
             var refer = Array(tempIndexSet.length);
-            for(let i = 0; i < tempIndexSet.length; i++){
-                //console.log("Sets: ", tempSets, "tempIndexSet[i]: ", tempIndexSet[i]);
-                refer[i] = tempSets[i].length;
-            }
+            refer.map((ele, i) => tempSets[i].length);
             // console.log(refer);
     
             AdvanceLooping.CombinationLoop(refer, indexs => {
