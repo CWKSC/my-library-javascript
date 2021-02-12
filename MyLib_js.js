@@ -146,7 +146,10 @@ BruteForceString: function(n, defaultSet = CTFTool.printableAsciiIntArray){
             // console.log("tempIndexSet: ", tempIndexSet);
             
             var refer = Array(tempIndexSet.length);
-            refer.map((ele, i) => tempSets[i].length);
+            for(let i = 0; i < tempIndexSet.length; i++){
+                //console.log("Sets: ", tempSets, "tempIndexSet[i]: ", tempIndexSet[i]);
+                refer[i] = tempSets[i].length;
+            }
             // console.log(refer);
     
             AdvanceLooping.CombinationLoop(refer, indexs => {
