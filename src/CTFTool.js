@@ -92,13 +92,16 @@ Test_XORTable: function() {
 BruteForceString: function(n, defaultSet = CTFTool.printableAsciiIntArray){
     this.data = [Array(n).fill(0)];
     this.defaultSet = defaultSet;
-    this.filter = function(condition, indexSet = null, sets = Array(indexSet.length).fill(defaultSet)){
+    this.filter = function(condition, indexSet = [], sets = Array(indexSet.length).fill(defaultSet)){
         var result = [];
         //console.log(condition, indexs, sets);
         
-        if(indexSet == null){
+        if(indexSet.length == 0){
             indexSet = condition.toString().match(/\[(.+?)\]/g)
                 .map(ele => parseInt(ele.substring(1, ele.length - 1)));
+            if(sets.length == 0){
+                sets = Array(indexSet.length).fill(defaultSet);
+            }
         }
 
         this.data.forEach(target => {
