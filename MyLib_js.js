@@ -21,11 +21,30 @@ Test_CombinationLoop: function(){
     this.CombinationLoop([1, 2, 3], console.log);
     console.log("CombinationLoop([2, 3, 4], console.log)");
     this.CombinationLoop([2, 3, 4], console.log);
-}
+},
+
+
+CombinationLoop_stepable: function*(refer = [1, 2, 3])
+{
+    var indexs = Array(refer.length).fill(0);
+    while (true)
+    {
+        if((yield indexs) != "current"){
+            indexs[indexs.length - 1]++;
+            for (var i = refer.length - 1; i >= 0; i--)
+            {
+                if (indexs[i] < refer[i]) break;
+                if (i == 0) return refer;
+                indexs[i] = 0;
+                indexs[i - 1]++;
+            }
+        }
+    };
+},
 
 
 }
-var CTFTool = {
+const CTFTool = {
     
 digitString: "0123456789",
 digitArray: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
@@ -42,6 +61,10 @@ uppercaseLetterIntArray: [65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78
 printableAsciiString: " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
 printableAsciiArray: [" ", "!", "\"", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":", ";", "<", "=", ">", "?", "@", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "[", "\\", "]", "^", "_", "`", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "{", "|", "}", "~"],
 printableAsciiIntArray: [32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126],
+
+commonLetterString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !{}_\"#$%&'()*+,-./:;<=>?@[\\]^`|~",
+commonLetterArray: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", " ", "!", "{", "}", "_", "\"", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "\\", "]", "^", "`", "|", "~"],
+commonLetterIntArray: [97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 32, 33, 123, 125, 95, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 58, 59, 60, 61, 62, 63, 64, 91, 92, 93, 94, 96, 124, 126],
 
 intToHexStringByEndian: function(input, LSB = false){
     var hexString = input.toString(16);
@@ -119,13 +142,16 @@ Test_XORTable: function() {
 BruteForceString: function(n, defaultSet = CTFTool.printableAsciiIntArray){
     this.data = [Array(n).fill(0)];
     this.defaultSet = defaultSet;
-    this.filter = function(condition, indexSet = null, sets = Array(indexSet.length).fill(defaultSet)){
+    this.filter = function(condition, indexSet = [], sets = Array(indexSet.length).fill(defaultSet)){
         var result = [];
         //console.log(condition, indexs, sets);
         
-        if(indexSet == null){
+        if(indexSet.length == 0){
             indexSet = condition.toString().match(/\[(.+?)\]/g)
                 .map(ele => parseInt(ele.substring(1, ele.length - 1)));
+            if(sets.length == 0){
+                sets = Array(indexSet.length).fill(defaultSet);
+            }
         }
 
         this.data.forEach(target => {
@@ -186,10 +212,208 @@ Test_BruteForceString: function(){
     .filter(a => a[0] + a[4] == 225, [0, 4])
     .filter(a => a[3] * a[5] == 12875, [3, 5])
     .display();
-}
+},
+
+BruteForceString_backTracking: function(n, defaultSet = CTFTool.commonLetterIntArray){
+    this.target = null
+    this.defaultSet = defaultSet;
+    this.conditionList = [];
+    this.add = function(condition, indexSet = [], sets = Array(indexSet.length).fill(defaultSet)){
+        if(indexSet.length == 0){
+            indexSet = condition.toString().match(/\[(.+?)\]/g)
+                .map(ele => parseInt(ele.substring(1, ele.length - 1)));
+            indexSet = [...new Set(indexSet)];
+            if(sets.length == 0){
+                sets = Array(indexSet.length).fill(defaultSet);
+            }
+        }
+        this.conditionList.push({condition: condition, indexSet: indexSet, sets: sets});
+        return this;
+    };
+    this.getConditionList = function*(){
+        let i = 0;
+        while(true){
+            switch(yield {i: i, conditionList: this.conditionList[i]}){
+                case "prev": i += -1; break;
+                case "current": break;
+                default: i += 1; break;
+            }
+        }
+    }
+    this.run = function(onlyOneResult = false, showConditionMatch = false, showTarget = false, showNotFind = false){
+        let conditionStep = this.getConditionList();
+        var target_temp = Array(n).fill(0);
+        if(this.target != null){
+            this.target.split('').map(ele => ele.charCodeAt())
+                .forEach((ele, i) => target_temp[i] = ele);
+        }
+        Pattern.backTracking({
+            target:         target_temp, 
+            indexStep:      null,
+            targetIndexSet: null,
+            targetSets:     null,
+            refer:          null
+        }, 
+        state => {
+            //et target        = [...state.target];
+
+            let currentCondition = conditionStep.next("current").value;
+            if(currentCondition.conditionList == undefined){ 
+                console.log("undefined");
+                conditionStep.next("prev");
+                return [-1];
+            }
+            let condition     = currentCondition.conditionList.condition;
+            let indexSet      = currentCondition.conditionList.indexSet;
+            let sets          = currentCondition.conditionList.sets;
+
+            if(showTarget)
+                console.log("target: [" + this.intArrToString(state.target) + "]");
+            // console.log("Current condition: ", condition);
+            // console.log("targetIndexSet: ", state.targetIndexSet);
+            // console.log("targetSets: ", state.targetSets);
+
+            if(state.indexStep != null){
+                // console.log("[prev] IndexStep", state.indexStep.next().value);
+                while(true){
+                    let indexs = state.indexStep.next().value;
+                    if(indexs == undefined) break;
+                    let values = indexs.map((ele, i) => state.targetSets[i][ele]);
+                    state.targetIndexSet.forEach((index, i) => state.target[index] = values[i]);
+                    if(condition(state.target)){
+                        if(showConditionMatch)
+                            console.log("Condition match [" + this.intArrToString(state.target) + "]");
+                        conditionStep.next();
+                        return [1, {
+                            target:         [...state.target],
+                            indexStep:      null,
+                            targetIndexSet: null,
+                            targetSets:     null,
+                            refer:          null
+                        }];
+                    }
+                }
+                //console.log("[prev] Not Find", condition);
+                conditionStep.next("prev");
+                return [-1];
+            }
+
+            state.targetIndexSet = [...indexSet];
+            state.targetSets = [...sets];
+            for(let i = 0; i < state.targetIndexSet.length; i++) {
+                if(state.target[state.targetIndexSet[i]] != 0) {
+                    state.targetIndexSet.splice(i, 1);
+                    state.targetSets.splice(i, 1);
+                    i--;
+                }
+            }
+
+            if(state.targetIndexSet.length == 0){
+                if(condition(state.target)){
+                    if(showConditionMatch)
+                        console.log("Condition match [" + this.intArrToString(state.target) + "]");
+                    // console.log("[no targetIndexSet] Condition match", this.intArrToString(target));
+                    conditionStep.next();
+                    return [1, {
+                        target:         [...state.target],
+                        indexStep:      null,
+                        targetIndexSet: null,
+                        targetSets:     null,
+                        refer:          null
+                    }]; 
+                }
+                // console.log("[no targetIndexSet] no Find");
+                conditionStep.next("prev");
+                return [-1];
+            }
+            // console.log("test");
+            
+            state.refer = Array(state.targetIndexSet.length);
+            for(let i = 0; i < state.targetIndexSet.length; i++){
+                state.refer[i] = state.targetSets[i].length;
+            }
+            //console.log("refer:", state.refer);
+
+            state.indexStep = AdvanceLooping.CombinationLoop_stepable(state.refer);
+            while(true){
+                let indexs = state.indexStep.next().value;
+                if(indexs == undefined) break;
+                let values = indexs.map((ele, i) => state.targetSets[i][ele]);
+                state.targetIndexSet.forEach((index, i) => state.target[index] = values[i]);
+                if(condition(state.target)){
+                    if(showConditionMatch)
+                        console.log("Condition match [" + this.intArrToString(state.target) + "]");
+                    conditionStep.next();
+                    return [1, {
+                        target:         [...state.target],
+                        indexStep:      null,
+                        targetIndexSet: null,
+                        targetSets:     null,
+                        refer:          null
+                    }];
+                }
+            }
+
+            if(showNotFind)
+                console.log("Not Find");
+            conditionStep.next("prev");
+            return [-1];
+        }, 
+        state => {
+            if(conditionStep.next("current").value.i == this.conditionList.length){
+                console.log("%c [[[ result: [" + this.intArrToString(state.target) + "] ]]]", "color:red;");
+                conditionStep.next("prev");
+                return true;
+            }
+            return false;
+        },
+        state => {
+            if(onlyOneResult){
+                if(conditionStep.next("current").value.i == this.conditionList.length){
+                    console.log("%c [[[ result: [" + this.intArrToString(state.target) + "] ]]]", "color:red;");
+                    return true;
+                }
+            }
+            if(conditionStep.next("current").value.i == -1){
+                console.log("End");
+                return true;
+            }
+            return false;
+        });
+    };
+    this.intArrToString = function(arr){
+        return arr.map(ele => String.fromCharCode(ele)).join('');
+    }
+},
 
 
 }
 
 
+const Pattern = {
+    returnState: Object.freeze({step: 1, prev: -1, end: 0}),
+    backTracking: function (init, f, stepBack = null, stepEnd = null){
+        var states = [init];
+        while(true){
+            if(states.length == 0) return [];
+            var result = f(states[states.length - 1]);
+            switch(result[0]){
+                case this.returnState.step: 
+                    if(stepEnd != null && stepEnd(result[1])){
+                        return states; // end
+                    }
+                    if(stepBack != null && stepBack(result[1])){
+                        states.pop(); break; // prev
+                    }
+                    states.push(result[1]); break;
+                case this.returnState.prev: states.pop(); break;
+                case this.returnState.end:  
+                    if(result.length == 2) states.push(result[1]);
+                    return states;
+            }
+        }
+
+    }
+
+}
 

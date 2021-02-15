@@ -119,3 +119,53 @@ new CTFTool.BruteForceString(6)
 // flag{}
 ```
 
+```js
+BruteForceString_backTracking(n)
+function add(condition, indexSet = [], sets = Array(indexSet.length).fill(defaultSet))
+function run(onlyOneResult = false, showConditionMatch = false, showTarget = false, showNotFind = false)
+
+// Example 1 - "flag" Brute Force Process //
+new CTFTool.BruteForceString_backTracking(4)
+.add(a => a[0] + a[1] == 210)
+.add(a => a[1] + a[2] == 205)
+.add(a => a[2] + a[3] == 200)
+.add(a => a[0] - a[1] == -6)
+.run(true, true, true);
+// Too much output, please try to run by yourself
+
+// Example 2 //
+var flag = new CTFTool.BruteForceString_backTracking(22)
+flag.target = "m1x\0\0t_4ll_t\0ge\0h3r!1!"
+flag
+.add(a => a[12] - a[17] + a[12] + a[8] == 153)
+.add(a => a[10] + a[21] + (a[19] ^ a[2]) == 217)
+.add(a => (a[5] ^ a[16]) + a[16] + a[3] + (a[0] ^ a[16]) == 232)
+.add(a => a[10] + a[3] + a[3] - a[19] + (a[19] ^ a[0]) == 328)
+.add(a => a[10] - a[8] + a[2] - a[19] == 74)
+.add(a => a[17] - a[1] + a[4] + a[11] + a[17] - a[9] == 166)
+.add(a => a[14] + a[10] + a[18] - a[9] + a[5] + a[10] == 413)
+.add(a => a[5] - a[16] + a[8] - a[12] + a[17] - a[13] + a[11] - a[2] + a[1] + a[21] == 98)
+.add(a => (a[19] ^ a[13]) + a[6] - a[13] + a[17] - a[11] + (a[16] ^ a[12]) == 85)
+.add(a => a[4] - a[16] + (a[2] ^ a[7]) == 77)
+.add(a => a[8] - a[17] + a[14] - a[3] + (a[8] ^ a[14]) + a[5] + a[1] + a[7] + a[10] == 384)
+.add(a => a[4] - a[0] + a[2] - a[4] + a[15] - a[21] + a[17] + a[2] == 265)
+.add(a => a[5] - a[18] + a[17] - a[4] + a[15] + a[2] + a[21] - a[18] + a[7] + a[6] == 250)
+.add(a => a[21] - a[19] + a[7] - a[18] + a[16] - a[21] + (a[12] ^ a[18]) == 75)
+.add(a => (a[10] ^ a[2]) + a[2] + a[7] + a[20] + a[13] + (a[3] ^ a[16]) + a[9] + a[6] == 621)
+.add(a => a[8] - a[3] + (a[14] ^ a[2]) + a[11] + a[0] + a[1] - a[19] == 283)
+.add(a => a[16] - a[14] + (a[0] ^ a[11]) + (a[0] ^ a[14]) + a[13] - a[19] == 106)
+.add(a => a[19] + a[10] + a[10] + a[19] + a[0] - a[20] + a[3] - a[18] == 297)
+.add(a => a[0] - a[15] + a[20] + a[18] == 156)
+.add(a => a[13] - a[8] + a[10] - a[20] + a[3] - a[17] == 85)
+.add(a => a[3] - a[17] + a[19] + a[4] + (a[12] ^ a[17]) + a[10] - a[2] == 160)
+.add(a => a[11] - a[21] + a[12] - a[10] == 36)
+.add(a => (a[18] ^ a[19]) + a[6] - a[16] + (a[5] ^ a[16]) == 102)
+.add(a => a[6] - a[13] + (a[10] ^ a[15]) + a[21] - a[5] == -48)
+.add(a => (a[5] ^ a[3]) + a[12] - a[11] + (a[6] ^ a[4]) == 29)
+.add(a => a[6] - a[14] + a[9] - a[2] + a[8] - a[15] + a[21] - a[11] == -109)
+.add(a => a[19] - a[7] + a[0] + a[16] + a[11] + a[17] == 361)
+.add(a => a[3] + a[15] + (a[15] ^ a[19]) == 296)
+.run(true)
+//  [[[ result: [m1x_it_4ll_t0geth3r!1!] ]]]
+```
+
