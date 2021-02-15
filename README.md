@@ -22,6 +22,8 @@ https://cdn.jsdelivr.net/gh/CWKSC/MyLib_js/src/CTFTool.js
 
 ### Function
 
+#### intToHexStringByEndian(input, LSB = false)
+
 ```js
 function intToHexStringByEndian(input, LSB = false)
 
@@ -32,6 +34,8 @@ intToHexStringByEndian(113626824)
 intToHexStringByEndian(113626824, true)
 -> "\xc8\xce\xc5\x06"
 ```
+
+#### XORTable(target = 'print_r(scandir(".")', availableSet = "0123456789-*|^~")
 
 ```js
 function XORTable(target = 'print_r(scandir(".")', availableSet = "0123456789-*|^~")
@@ -68,6 +72,8 @@ XORTable('print_r(scandir(".")', "0123456789-*|^~");
 ```
 
 ### Class
+
+#### BruteForceString(n)
 
 ```js
 BruteForceString(n)
@@ -118,6 +124,8 @@ new CTFTool.BruteForceString(6)
 .display();
 // flag{}
 ```
+
+#### BruteForceString_backTracking(n)
 
 ```js
 BruteForceString_backTracking(n)
