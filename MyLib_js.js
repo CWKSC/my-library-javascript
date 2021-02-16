@@ -44,6 +44,11 @@ CombinationLoop_stepable: function*(refer = [1, 2, 3])
 
 
 }
+const Convert = {
+    intArrToString: function(arr){
+        return arr.map(ele => String.fromCharCode(ele)).join('');
+    }
+}
 const CTFTool = {
     
 digitString: "0123456789",
@@ -247,7 +252,7 @@ BruteForceString_backTracking: function(n, defaultSet = CTFTool.commonLetterIntA
             this.target.split('').map(ele => ele.charCodeAt())
                 .forEach((ele, i) => target_temp[i] = ele);
         }
-        Pattern.backTracking({
+        return Pattern.backTracking({
             target:         target_temp, 
             indexStep:      null,
             targetIndexSet: null,
@@ -268,7 +273,7 @@ BruteForceString_backTracking: function(n, defaultSet = CTFTool.commonLetterIntA
             let sets          = currentCondition.conditionList.sets;
 
             if(showTarget)
-                console.log("target: [" + this.intArrToString(state.target) + "]");
+                console.log("target: [" + Convert.intArrToString(state.target) + "]");
             // console.log("Current condition: ", condition);
             // console.log("targetIndexSet: ", state.targetIndexSet);
             // console.log("targetSets: ", state.targetSets);
@@ -282,7 +287,7 @@ BruteForceString_backTracking: function(n, defaultSet = CTFTool.commonLetterIntA
                     state.targetIndexSet.forEach((index, i) => state.target[index] = values[i]);
                     if(condition(state.target)){
                         if(showConditionMatch)
-                            console.log("Condition match [" + this.intArrToString(state.target) + "]");
+                            console.log("Condition match [" + Convert.intArrToString(state.target) + "]");
                         conditionStep.next();
                         return [1, {
                             target:         [...state.target],
@@ -311,7 +316,7 @@ BruteForceString_backTracking: function(n, defaultSet = CTFTool.commonLetterIntA
             if(state.targetIndexSet.length == 0){
                 if(condition(state.target)){
                     if(showConditionMatch)
-                        console.log("Condition match [" + this.intArrToString(state.target) + "]");
+                        console.log("Condition match [" + Convert.intArrToString(state.target) + "]");
                     // console.log("[no targetIndexSet] Condition match", this.intArrToString(target));
                     conditionStep.next();
                     return [1, {
@@ -342,7 +347,7 @@ BruteForceString_backTracking: function(n, defaultSet = CTFTool.commonLetterIntA
                 state.targetIndexSet.forEach((index, i) => state.target[index] = values[i]);
                 if(condition(state.target)){
                     if(showConditionMatch)
-                        console.log("Condition match [" + this.intArrToString(state.target) + "]");
+                        console.log("Condition match [" + Convert.intArrToString(state.target) + "]");
                     conditionStep.next();
                     return [1, {
                         target:         [...state.target],
@@ -361,7 +366,7 @@ BruteForceString_backTracking: function(n, defaultSet = CTFTool.commonLetterIntA
         }, 
         state => {
             if(conditionStep.next("current").value.i == this.conditionList.length){
-                console.log("%c [[[ result: [" + this.intArrToString(state.target) + "] ]]]", "color:red;");
+                console.log("%c [[[ result: [" + Convert.intArrToString(state.target) + "] ]]]", "color:red;");
                 conditionStep.next("prev");
                 return true;
             }
@@ -370,7 +375,7 @@ BruteForceString_backTracking: function(n, defaultSet = CTFTool.commonLetterIntA
         state => {
             if(onlyOneResult){
                 if(conditionStep.next("current").value.i == this.conditionList.length){
-                    console.log("%c [[[ result: [" + this.intArrToString(state.target) + "] ]]]", "color:red;");
+                    console.log("%c [[[ result: [" + Convert.intArrToString(state.target) + "] ]]]", "color:red;");
                     return true;
                 }
             }
@@ -381,9 +386,6 @@ BruteForceString_backTracking: function(n, defaultSet = CTFTool.commonLetterIntA
             return false;
         });
     };
-    this.intArrToString = function(arr){
-        return arr.map(ele => String.fromCharCode(ele)).join('');
-    }
 },
 
 

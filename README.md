@@ -1,6 +1,6 @@
 https://cwksc.github.io/MyLib_js/  (Open your console to use)
 
-## MyLib_js
+# MyLib_js
 
 https://cdn.jsdelivr.net/gh/CWKSC/MyLib_js/MyLib_js.js
 
@@ -11,14 +11,6 @@ https://cdn.jsdelivr.net/gh/CWKSC/MyLib_js/MyLib_js.js
 ```
 
 ## CTFTool
-
-https://cdn.jsdelivr.net/gh/CWKSC/MyLib_js/src/CTFTool.js
-
-```html
-<script type="text/javascript" 
-        src="https://cdn.jsdelivr.net/gh/CWKSC/MyLib_js/src/CTFTool.js"
-        async> </script>
-```
 
 ### Function
 
@@ -138,10 +130,32 @@ new CTFTool.BruteForceString_backTracking(4)
 .add(a => a[1] + a[2] == 205)
 .add(a => a[2] + a[3] == 200)
 .add(a => a[0] - a[1] == -6)
-.run(true, true, true);
-// Too much output, please try to run by yourself
+.run(true, true);
 
-// Example 2 //
+// Condition match [aq  ]
+// Condition match [aq\ ]
+// Condition match [aq\l]
+// Condition match [bp  ]
+// Condition match [bp] ]
+// Condition match [bp]k]
+// Condition match [co  ]
+// Condition match [co^ ]
+// Condition match [co^j]
+// Condition match [dn  ]
+// Condition match [dn_ ]
+// Condition match [dn_i]
+// Condition match [em  ]
+// Condition match [em` ]
+// Condition match [em`h]
+// Condition match [fl  ]
+// Condition match [fla ]
+// Condition match [flag]
+// Condition match [flag]
+// [[[ result: [flag] ]]]
+
+
+// Example 2 - DiceCTF rev/babymix as testcase //
+// know the result, and just some char is missing (become '\0') 
 var flag = new CTFTool.BruteForceString_backTracking(22)
 flag.target = "m1x\0\0t_4ll_t\0ge\0h3r!1!"
 flag
