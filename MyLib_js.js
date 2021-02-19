@@ -265,7 +265,6 @@ BruteForceString_backTracking: function(n, defaultSet = CTFTool.commonLetterIntA
             let currentCondition = conditionStep.next("current").value;
             if(currentCondition.conditionList == undefined){ 
                 console.log("undefined");
-                conditionStep.next("prev");
                 return [-1];
             }
             let condition     = currentCondition.conditionList.condition;
@@ -288,7 +287,6 @@ BruteForceString_backTracking: function(n, defaultSet = CTFTool.commonLetterIntA
                     if(condition(state.target)){
                         if(showConditionMatch)
                             console.log("Condition match [" + Convert.intArrToString(state.target) + "]");
-                        conditionStep.next();
                         return [1, {
                             target:         [...state.target],
                             indexStep:      null,
@@ -299,7 +297,6 @@ BruteForceString_backTracking: function(n, defaultSet = CTFTool.commonLetterIntA
                     }
                 }
                 //console.log("[prev] Not Find", condition);
-                conditionStep.next("prev");
                 return [-1];
             }
 
@@ -318,7 +315,6 @@ BruteForceString_backTracking: function(n, defaultSet = CTFTool.commonLetterIntA
                     if(showConditionMatch)
                         console.log("Condition match [" + Convert.intArrToString(state.target) + "]");
                     // console.log("[no targetIndexSet] Condition match", this.intArrToString(target));
-                    conditionStep.next();
                     return [1, {
                         target:         [...state.target],
                         indexStep:      null,
@@ -328,7 +324,6 @@ BruteForceString_backTracking: function(n, defaultSet = CTFTool.commonLetterIntA
                     }]; 
                 }
                 // console.log("[no targetIndexSet] no Find");
-                conditionStep.next("prev");
                 return [-1];
             }
             // console.log("test");
@@ -348,7 +343,6 @@ BruteForceString_backTracking: function(n, defaultSet = CTFTool.commonLetterIntA
                 if(condition(state.target)){
                     if(showConditionMatch)
                         console.log("Condition match [" + Convert.intArrToString(state.target) + "]");
-                    conditionStep.next();
                     return [1, {
                         target:         [...state.target],
                         indexStep:      null,
@@ -361,30 +355,36 @@ BruteForceString_backTracking: function(n, defaultSet = CTFTool.commonLetterIntA
 
             if(showNotFind)
                 console.log("Not Find");
-            conditionStep.next("prev");
             return [-1];
         }, 
+        // whenStep //
         state => {
-            if(conditionStep.next("current").value.i == this.conditionList.length){
-                console.log("%c [[[ result: [" + Convert.intArrToString(state.target) + "] ]]]", "color:red;");
-                conditionStep.next("prev");
-                return true;
-            }
-            return false;
-        },
-        state => {
+            conditionStep.next();
+
+            // End //
             if(onlyOneResult){
                 if(conditionStep.next("current").value.i == this.conditionList.length){
                     console.log("%c [[[ result: [" + Convert.intArrToString(state.target) + "] ]]]", "color:red;");
-                    return true;
+                    return [0];
                 }
             }
             if(conditionStep.next("current").value.i == -1){
                 console.log("End");
-                return true;
+                return [0];
             }
-            return false;
-        });
+
+            // Prev //
+            if(conditionStep.next("current").value.i == this.conditionList.length){
+                console.log("%c [[[ result: [" + Convert.intArrToString(state.target) + "] ]]]", "color:red;");
+                return [-1];
+            }
+        },
+        // whenPrev //
+        state => {
+            conditionStep.next("prev");
+        },
+        // whenEnd //
+        null);
     };
 },
 
@@ -393,28 +393,56 @@ BruteForceString_backTracking: function(n, defaultSet = CTFTool.commonLetterIntA
 
 
 const Pattern = {
-    returnState: Object.freeze({step: 1, prev: -1, end: 0}),
-    backTracking: function (init, f, stepBack = null, stepEnd = null){
+    returnState: Object.freeze({step: 1, prev: -1, end: 0, repeat: 2}),
+    backTracking: function (init, f, 
+        whenStep = null, whenPrev = null, whenEnd = null){
         var states = [init];
         while(true){
             if(states.length == 0) return [];
             var result = f(states[states.length - 1]);
-            switch(result[0]){
-                case this.returnState.step: 
-                    if(stepEnd != null && stepEnd(result[1])){
-                        return states; // end
+            function step(){
+                if(whenStep != null) {
+                    let temp = whenStep(result[1]);
+                    if(temp != undefined) {
+                        router(temp[0]);
                     }
-                    if(stepBack != null && stepBack(result[1])){
-                        states.pop(); break; // prev
+                }
+                states.push(result[1]);
+            }
+            function prev(){
+                if(whenPrev != null) { 
+                    let temp = whenPrev(result[1]);
+                    if(temp != undefined) {
+                        router(temp[0]);
                     }
-                    states.push(result[1]); break;
-                case this.returnState.prev: states.pop(); break;
-                case this.returnState.end:  
-                    if(result.length == 2) states.push(result[1]);
-                    return states;
+                }
+                states.pop();
+            }
+            function end(){
+                if(whenEnd != null) {
+                    let temp = whenEnd(result[1]);
+                    if(temp != undefined) {
+                        router(temp[0]);
+                    }
+                }
+                if(result.length == 2) { states.push(result[1]); }
+                throw states;
+            }
+            function router(returnState){
+                switch(returnState){
+                    case Pattern.returnState.step: step(); break;
+                    case Pattern.returnState.prev: prev(); break;
+                    case Pattern.returnState.end:  end(); break;
+                    case Pattern.returnState.repeat: break;
+                    default: break;
+                }
+            }
+            try {
+                router(result[0]);
+            } catch (returnValue) {
+                return returnValue;
             }
         }
-
     }
 
 }
