@@ -7,32 +7,25 @@ const Pattern = {
             if(states.length == 0) return [];
             var result = f(states[states.length - 1]);
             function step(){
-                if(whenStep != null) {
-                    let temp = whenStep(result[1]);
-                    if(temp != undefined) {
-                        router(temp[0]);
-                    }
-                }
+                whenRouter(whenStep);
                 states.push(result[1]);
             }
             function prev(){
-                if(whenPrev != null) { 
-                    let temp = whenPrev(result[1]);
-                    if(temp != undefined) {
-                        router(temp[0]);
-                    }
-                }
+                whenRouter(whenPrev);
                 states.pop();
             }
             function end(){
-                if(whenEnd != null) {
-                    let temp = whenEnd(result[1]);
+                whenRouter(whenEnd);
+                if(result.length == 2) { states.push(result[1]); }
+                throw states;
+            }
+            function whenRouter(when){
+                if(when != null) {
+                    let temp = when(result[1]);
                     if(temp != undefined) {
                         router(temp[0]);
                     }
                 }
-                if(result.length == 2) { states.push(result[1]); }
-                throw states;
             }
             function router(returnState){
                 switch(returnState){
