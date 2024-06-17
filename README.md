@@ -23,7 +23,7 @@ https://cdn.jsdelivr.net/gh/CWKSC/MyLib_js/MyLib_js.js
 #### intToHexStringByEndian(input, LSB = false)
 
 ```js
-function intToHexStringByEndian(input, LSB = false)
+function intToHexStringByEndian(input, LSB = false);
 
 (113626824).toString(16)
 -> "6c5cec8"
@@ -36,7 +36,10 @@ intToHexStringByEndian(113626824, true)
 #### XORTable(target = 'print_r(scandir(".")', availableSet = "0123456789-*|^~")
 
 ```js
-function XORTable(target = 'print_r(scandir(".")', availableSet = "0123456789-*|^~")
+function XORTable(
+    target = 'print_r(scandir(".")',
+    availableSet = "0123456789-*|^~"
+);
 
 // Example
 XORTable('print_r(scandir(".")', "0123456789-*|^~");
@@ -74,9 +77,13 @@ XORTable('print_r(scandir(".")', "0123456789-*|^~");
 #### BruteForceString(n)
 
 ```js
-BruteForceString(n)
-function filter(condition, indexSet, sets = Array(indexSet.length).fill(CTFTool.printableAsciiIntArray))
-function display(n = 20)
+new CTFTool.BruteForceString(n);
+function filter(
+    condition,
+    indexSet,
+    sets = Array(indexSet.length).fill(CTFTool.printableAsciiIntArray)
+);
+function display(n = 20);
 
 // Example 1 //
 var flag = new CTFTool.BruteForceString(6)
@@ -126,9 +133,17 @@ new CTFTool.BruteForceString(6)
 #### BruteForceString_backTracking(n)
 
 ```js
-BruteForceString_backTracking(n)
-function add(condition, indexSet = [], sets = Array(indexSet.length).fill(defaultSet))
-function run(onlyOneResult = false, showConditionMatch = false, showTarget = false, showNotFind = false)
+new CTFTool.BruteForceString_backTracking(n);
+function add(
+    condition,
+    indexSet = [],
+    sets = Array(indexSet.length).fill(defaultSet)
+);
+function run(
+    onlyOneResult = false,
+    showConditionMatch = false, showTarget = false,
+    showNotFind = false
+);
 
 // Example 1 - "flag" Brute Force Process
 new CTFTool.BruteForceString_backTracking(4)
