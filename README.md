@@ -1,6 +1,12 @@
-https://cwksc.github.io/MyLib_js/  (Open your console to use)
+# mylib_js
 
-# MyLib_js
+https://cwksc.github.io/MyLib_js/  (Open console to use)
+
+> [!NOTE]
+>
+> Mainly contain some CTF tool
+
+## Embedded
 
 https://cdn.jsdelivr.net/gh/CWKSC/MyLib_js/MyLib_js.js
 
@@ -32,7 +38,7 @@ intToHexStringByEndian(113626824, true)
 ```js
 function XORTable(target = 'print_r(scandir(".")', availableSet = "0123456789-*|^~")
 
-// Example //
+// Example
 XORTable('print_r(scandir(".")', "0123456789-*|^~");
 
 '4'^'8'^'|' = p
@@ -104,7 +110,7 @@ flag.filter(a => a[0] - a[1] == -6, [0, 2])
 flag.display();
 // flag
 
-// Example 2 //
+// Example 2
 new CTFTool.BruteForceString(6)
 .filter(a => a[0] + a[1] == 210, [0, 1])
 .filter(a => a[1] + a[2] == 205, [1, 2])
@@ -124,7 +130,7 @@ BruteForceString_backTracking(n)
 function add(condition, indexSet = [], sets = Array(indexSet.length).fill(defaultSet))
 function run(onlyOneResult = false, showConditionMatch = false, showTarget = false, showNotFind = false)
 
-// Example 1 - "flag" Brute Force Process //
+// Example 1 - "flag" Brute Force Process
 new CTFTool.BruteForceString_backTracking(4)
 .add(a => a[0] + a[1] == 210)
 .add(a => a[1] + a[2] == 205)
@@ -154,7 +160,7 @@ new CTFTool.BruteForceString_backTracking(4)
 // [[[ result: [flag] ]]]
 
 
-// Example 2 - DiceCTF rev/babymix as testcase //
+// Example 2 - DiceCTF rev/babymix as testcase
 // know the result, and just some char is missing (become '\0') 
 var flag = new CTFTool.BruteForceString_backTracking(22)
 flag.target = "m1x\0\0t_4ll_t\0ge\0h3r!1!"
