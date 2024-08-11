@@ -1,6 +1,6 @@
 # mylib_js
 
-https://cwksc.github.io/mylib_js/  (Open console to use)
+https://cwksc.github.io/my-library-javascript/  (Open console to use)
 
 > [!NOTE]
 >
